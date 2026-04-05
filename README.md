@@ -74,4 +74,9 @@ The goal is not just to improve model performance, but to ensure AI systems beha
 - AI failure modes  
 - Edge case behavior  
 - Human-centered AI evaluation  
-- Mental health + AI system reliability  
+- Mental health + AI system reliability
+
+---
+
+  ## Author Perspective
+This project reflects an interest in building AI systems that prioritize human well-being, safety, and real-world reliability — particularly in emotionally sensitive domains.
