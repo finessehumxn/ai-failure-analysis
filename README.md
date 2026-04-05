@@ -36,3 +36,5 @@ These failures highlight the gap between surface-level accuracy and real-world u
 - Failure modes  
 - Edge case behavior  
 - Human-centered AI evaluation  
+
+Detailed failure cases are documented in `src/failure_cases.md`.
