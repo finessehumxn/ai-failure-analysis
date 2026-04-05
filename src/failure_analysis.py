@@ -9,12 +9,16 @@ responses = [
 ]
 
 def classify_response(text):
-    if "okay" in text or "fine" in text or "great" in text:
+    text = text.lower()
+
+    if any(word in text for word in ["great", "amazing", "happy"]):
         return "Positive"
-    elif "lost" in text or "overwhelmed" in text:
+    elif any(word in text for word in ["lost", "overwhelmed", "don’t know", "dont know"]):
         return "Negative"
-    else:
+    elif any(word in text for word in ["okay", "fine"]):
         return "Neutral"
+    else:
+        return "Unknown"
 
 def run_tests():
     print("Running AI Failure Analysis...\n")
