@@ -80,3 +80,8 @@ The goal is not just to improve model performance, but to ensure AI systems beha
 
   ## Author Perspective
 This project reflects an interest in building AI systems that prioritize human well-being, safety, and real-world reliability — particularly in emotionally sensitive domains.
+
+---
+
+## Future Direction
+This project will evolve into testing more advanced NLP models and evaluating how well they handle nuanced emotional and psychological language compared to baseline approaches.
