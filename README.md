@@ -1,4 +1,4 @@
-# L. Finesse Humxn
+# L.Finesse Humxn
 
 **AI Systems Engineer · LangGraph · RAG · LLM Safety · Human-Centered Deployment**
 
