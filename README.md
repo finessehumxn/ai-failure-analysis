@@ -1,58 +1,120 @@
-# L.Finesse Humxn
+# AI Failure Mode Analysis
 
-**AI Systems Engineer · LangGraph · RAG · LLM Safety · Human-Centered Deployment**
+**Structured evaluation of AI system behavior in emotionally sensitive, human-centered domains.**
+
+[![Language](https://img.shields.io/badge/Language-Python%20%7C%20Jupyter-blue?style=flat)]()
+[![Domain](https://img.shields.io/badge/Domain-AI%20Evaluation%20%7C%20Safety--Critical%20Systems-purple?style=flat)]()
+[![Status](https://img.shields.io/badge/Status-Active%20Research-yellow?style=flat)]()
+
+---
+
+## Problem Statement
+
+Standard AI evaluation optimizes for accuracy on clean, well-formed inputs. Production systems — especially in mental health and healthcare — encounter inputs that are ambiguous, emotionally loaded, indirect, and structurally atypical.
+
+This project focuses on what happens at that boundary.
+
+The question is not *can the model get it right on a benchmark?* The question is *what does the model do when the input is messy and the cost of a wrong answer is human?*
+
+---
+
+## Motivation
+
+This research comes from direct production experience: 7+ years building and operating AI systems in emotionally high-stakes environments — including a live youth suicide prevention platform across 8+ countries and a deployed healthcare AI assistant.
+
+In those systems, false negatives on distress signals, miscalibrated confidence on emotionally ambiguous inputs, and guardrail failures under edge-case load are not abstract concerns. They are operational risk.
+
+This project builds the structured evaluation foundation to identify, categorize, and track those failure patterns before deployment — and to feed findings back into guardrail design.
+
+---
+
+## Project Structure
+
+```
+ai-failure-analysis/
+├── src/
+│   ├── model_simulation.py       # Baseline classifier implementation
+│   ├── evaluation.py             # Scoring, metrics, and failure logging
+│   ├── improved_model.py         # Enhanced rule-based classifier (iterated)
+│   └── failure_cases.md          # Documented failure cases with analysis
+├── notebooks/
+│   └── experiment_1_analysis.ipynb   # Full experiment walkthrough
+├── results/
+│   └── evaluation_summary.md     # Structured output summary
+└── README.md
+```
+
+---
+
+## Experiment 1: Baseline Rule-Based Classifier
+
+### Objective
+Establish a performance floor. Quantify how a naive, keyword-dependent classifier performs on emotionally ambiguous text — specifically text that may signal distress without using explicit distress vocabulary.
+
+### Implementation
+Rule-based classifier operating on keyword presence and simple pattern matching — intentionally simplified to surface fundamental failure modes before introducing model complexity.
+
+### Results
+
+| Metric | Value |
+|---|---|
+| Overall Accuracy | ~40% |
+| False Negative Rate (distress) | High |
+| Confidence Calibration | Poor — overconfident on surface matches |
+
+### Failure Taxonomy
+
+| Category | Pattern | Risk Level |
+|---|---|---|
+| **Implicit distress** | Distress framed as fatigue, disengagement, or humor | High |
+| **Keyword dependency** | Correct classification only when explicit terms present | High |
+| **Ambiguity collapse** | Ambiguous inputs defaulting to neutral/positive classification | Medium-High |
+| **Context blindness** | Single-sentence accuracy decoupled from conversational context | Medium |
+
+### Interpretation
+
+A 40% accuracy rate in a general task is a failed model. In a mental health context, it means the majority of non-explicit distress signals produce incorrect outputs — which in a deployed system translates to dismissive or inappropriate responses to people who are struggling.
+
+That is the point of measuring it.
+
+---
+
+## Evaluation Philosophy
+
+This project uses a **human-impact-centered evaluation framework** rather than standard benchmark metrics:
+
+- **False negative cost weighting** — missed distress signals weighted higher than false positives
+- **Confidence-accuracy gap tracking** — identifies where model certainty diverges from actual reliability
+- **Edge case saturation testing** — inputs designed to stress the boundary conditions, not the center of the distribution
+- **Failure mode categorization** — structured taxonomy for cross-model comparison
+
+---
+
+## Experiment Roadmap
+
+| Experiment | Status | Description |
+|---|---|---|
+| Baseline rule-based classifier | ✅ Complete | Performance floor established |
+| Enhanced rule-based classifier | ✅ Complete | Iterated improvements |
+| NLP/ML classifier | 🔄 In Progress | BERT-based model on same dataset |
+| Production LLM evaluation | 📋 Planned | GPT-4 / Claude on edge case set |
+| Guardrail stress testing | 📋 Planned | Safety filter behavior under adversarial input |
+| Cross-model failure comparison | 📋 Planned | Structured taxonomy across model types |
+
+---
+
+## Relationship to Production Systems
+
+Findings from this project directly inform:
+
+- Guardrail node design in **[MedCompanionAI](https://github.com/finessehumxn/medcompanion-ai)**
+- Prompt engineering and safety routing in live mental health infrastructure
+- **[EmoSafe AI](https://github.com/finessehumxn/emosafe-ai)** — LLM behavior observation on emotionally sensitive prompts
+
+---
+
+## Built By
+
+**L. Finesse Humxn** — AI systems engineer. Founder of [Finesse Our Minds](https://finesseourminds.com).
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-lfinesse---%230077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/lfinesse-)
-[![Email](https://img.shields.io/badge/Email-finessehumxn%40gmail.com-D14836?style=flat&logo=gmail)](mailto:finessehumxn@gmail.com)
-[![MedCompanionAI](https://img.shields.io/badge/Live%20Product-MedCompanionAI-4CAF50?style=flat)](https://medcompanion-ai.up.railway.app/app)
-
----
-
-## About
-
-I build AI systems for environments where failure has human consequences.
-
-10+ years across full-stack development, AI systems architecture, and production deployment — including senior roles at GoDaddy and Gusto, and 7 years running the technical infrastructure for a live mental health platform operating across 8+ countries.
-
-My focus is the layer most engineers don't stress-test: what happens when a model meets ambiguous, emotionally complex, or high-stakes input in production. I design for that moment — not the clean demo.
-
-Current build: **[MedCompanionAI](https://medcompanion-ai.up.railway.app/app)** — a deployed healthcare AI briefing assistant built on LangGraph, RAG, and a safety-first agentic architecture. Live. Real users. Being built into a company.
-
----
-
-## Technical Focus
-
-```
-LLM Orchestration      →  LangGraph · multi-node agentic graphs · tool-use patterns
-Retrieval Systems      →  RAG pipelines · vector search · text-embedding-3-small · chunking strategies  
-Evaluation & Safety    →  failure mode analysis · guardrail design · edge case testing · safe output handling
-Full-Stack Deployment  →  Python · FastAPI · Railway · API integration · production monitoring
-Applied Domains        →  healthcare AI · mental health tech · emotionally sensitive environments
-```
-
----
-
-## Selected Work
-
-### 🏥 [MedCompanionAI](https://github.com/finessehumxn/medcompanion-ai) — `Deployed`
-Healthcare AI briefing assistant. Multi-node LangGraph graph with intake, guardrail, retrieval, and response nodes. RAG pipeline with vector retrieval and source citations. Safety routing for crisis-adjacent inputs. Full-stack, live on Railway.
-
-### 🔬 [AI Failure Mode Analysis](https://github.com/finessehumxn/ai-failure-analysis) — `Active Research`
-Structured experiments on where AI systems fail in emotionally sensitive domains. Baseline classifier → NLP models → LLM evaluation. Failure taxonomy designed around real-world human impact, not benchmark metrics.
-
-### 🧠 [EmoSafe AI](https://github.com/finessehumxn/emosafe-ai) — `Active`
-Systematic observation of LLM behavior on emotionally ambiguous and crisis-adjacent prompts. Documents misalignment patterns between model confidence and safe output behavior. Feeds directly into guardrail design for production systems.
-
----
-
-## Background
-
-- Senior Web Developer — GoDaddy (AI feature integration, production systems)
-- Workflow & Automation — Gusto (AI-assisted onboarding pipelines)
-- Technical Trainer — Los Angeles County (systems, infrastructure, election operations)
-- Founder & AI Systems Operator — Finesse Our Minds (7 yrs, 8+ countries, live platform)
-- IBM Certified: Python for Data Science & AI Development | DevOps
-
----
-
-*For collaboration, press, or investment inquiries — [LinkedIn](https://www.linkedin.com/in/lfinesse-) or [email](mailto:finessehumxn@gmail.com).*
