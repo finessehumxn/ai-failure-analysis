@@ -1,87 +1,58 @@
-# AI Failure Mode Analysis
+# L. Finesse Humxn
 
-## Overview
-This project explores how AI systems behave under real-world conditions, with a focus on identifying failure modes, edge cases, and unintended outputs.
+**AI Systems Engineer · LangGraph · RAG · LLM Safety · Human-Centered Deployment**
 
-Rather than optimizing for correct answers, this project focuses on understanding where and why models fail — especially in sensitive, human-centered domains like mental health.
-
----
-
-## Motivation
-In high-stakes environments, AI systems must handle ambiguity, emotional nuance, and unexpected inputs. Small misclassifications can lead to significant real-world consequences.
-
-This project aims to analyze those failure points, uncover model limitations, and highlight the importance of responsible AI evaluation.
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-lfinesse---%230077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/lfinesse-)
+[![Email](https://img.shields.io/badge/Email-finessehumxn%40gmail.com-D14836?style=flat&logo=gmail)](mailto:finessehumxn@gmail.com)
+[![MedCompanionAI](https://img.shields.io/badge/Live%20Product-MedCompanionAI-4CAF50?style=flat)](https://medcompanion-ai.up.railway.app/app)
 
 ---
 
-## Project Structure
-- `src/` – core scripts for model simulation, evaluation, and testing  
-- `data/` – datasets used for experiments  
-- `notebooks/` – experimental analysis and exploration  
-- `results/` – outputs, logs, and evaluation summaries  
+## About
+
+I build AI systems for environments where failure has human consequences.
+
+10+ years across full-stack development, AI systems architecture, and production deployment — including senior roles at GoDaddy and Gusto, and 7 years running the technical infrastructure for a live mental health platform operating across 8+ countries.
+
+My focus is the layer most engineers don't stress-test: what happens when a model meets ambiguous, emotionally complex, or high-stakes input in production. I design for that moment — not the clean demo.
+
+Current build: **[MedCompanionAI](https://medcompanion-ai.up.railway.app/app)** — a deployed healthcare AI briefing assistant built on LangGraph, RAG, and a safety-first agentic architecture. Live. Real users. Being built into a company.
 
 ---
 
-## First Experiment: Baseline Model
-A simple rule-based classifier was implemented to simulate model behavior when interpreting emotionally ambiguous text.
+## Technical Focus
 
-### Initial Observations
-- Misclassification of ambiguous emotional language  
-- Inability to detect nuanced distress signals  
-- Over-simplification of sentiment categories  
-
-These failures highlight the gap between surface-level accuracy and real-world understanding.
-
----
-
-## Evaluation Results
-The baseline model was evaluated on a small labeled dataset to measure performance.
-
-**Accuracy:** ~40%
-
-### Key Failure Patterns
-- Misinterpretation of emotionally ambiguous language  
-- Failure to detect implicit distress  
-- Over-reliance on keyword-based classification  
-
-These results demonstrate how simplistic models can fail in sensitive domains where context and nuance are critical.
-
-Detailed failure cases are documented in `src/failure_cases.md`.
+```
+LLM Orchestration      →  LangGraph · multi-node agentic graphs · tool-use patterns
+Retrieval Systems      →  RAG pipelines · vector search · text-embedding-3-small · chunking strategies  
+Evaluation & Safety    →  failure mode analysis · guardrail design · edge case testing · safe output handling
+Full-Stack Deployment  →  Python · FastAPI · Railway · API integration · production monitoring
+Applied Domains        →  healthcare AI · mental health tech · emotionally sensitive environments
+```
 
 ---
 
-## Why This Matters
-In mental health contexts, misclassification is not just a technical issue — it can result in harmful, dismissive, or inappropriate responses.
+## Selected Work
 
-This project emphasizes:
-- The importance of context-aware AI systems  
-- The need for rigorous failure analysis before deployment  
-- A shift from accuracy-focused metrics to human-centered evaluation  
+### 🏥 [MedCompanionAI](https://github.com/finessehumxn/medcompanion-ai) — `Deployed`
+Healthcare AI briefing assistant. Multi-node LangGraph graph with intake, guardrail, retrieval, and response nodes. RAG pipeline with vector retrieval and source citations. Safety routing for crisis-adjacent inputs. Full-stack, live on Railway.
 
-The goal is not just to improve model performance, but to ensure AI systems behave safely and responsibly in real-world scenarios.
+### 🔬 [AI Failure Mode Analysis](https://github.com/finessehumxn/ai-failure-analysis) — `Active Research`
+Structured experiments on where AI systems fail in emotionally sensitive domains. Baseline classifier → NLP models → LLM evaluation. Failure taxonomy designed around real-world human impact, not benchmark metrics.
 
----
-
-## Next Steps
-- Expand dataset with more complex and realistic inputs  
-- Introduce more advanced models (ML / NLP-based)  
-- Develop structured failure mode categories  
-- Improve evaluation metrics for edge-case detection  
+### 🧠 [EmoSafe AI](https://github.com/finessehumxn/emosafe-ai) — `Active`
+Systematic observation of LLM behavior on emotionally ambiguous and crisis-adjacent prompts. Documents misalignment patterns between model confidence and safe output behavior. Feeds directly into guardrail design for production systems.
 
 ---
 
-## Focus Areas
-- AI failure modes  
-- Edge case behavior  
-- Human-centered AI evaluation  
-- Mental health + AI system reliability
+## Background
+
+- Senior Web Developer — GoDaddy (AI feature integration, production systems)
+- Workflow & Automation — Gusto (AI-assisted onboarding pipelines)
+- Technical Trainer — Los Angeles County (systems, infrastructure, election operations)
+- Founder & AI Systems Operator — Finesse Our Minds (7 yrs, 8+ countries, live platform)
+- IBM Certified: Python for Data Science & AI Development | DevOps
 
 ---
 
-  ## Author Perspective
-This project reflects an interest in building AI systems that prioritize human well-being, safety, and real-world reliability — particularly in emotionally sensitive domains.
-
----
-
-## Future Direction
-This project will evolve into testing more advanced NLP models and evaluating how well they handle nuanced emotional and psychological language compared to baseline approaches.
+*For collaboration, press, or investment inquiries — [LinkedIn](https://www.linkedin.com/in/lfinesse-) or [email](mailto:finessehumxn@gmail.com).*
