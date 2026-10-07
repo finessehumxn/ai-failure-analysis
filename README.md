@@ -1,120 +1,46 @@
 # AI Failure Mode Analysis
 
-**Structured evaluation of AI system behavior in emotionally sensitive, human-centered domains.**
+An early experiment (April 2026) in how a keyword-based classifier fails on emotionally ambiguous text. It asks whether such a classifier can tell distress from neutral language when nobody uses the obvious words.
 
-[![Language](https://img.shields.io/badge/Language-Python%20%7C%20Jupyter-blue?style=flat)]()
-[![Domain](https://img.shields.io/badge/Domain-AI%20Evaluation%20%7C%20Safety--Critical%20Systems-purple?style=flat)]()
-[![Status](https://img.shields.io/badge/Status-Active%20Research-yellow?style=flat)]()
-
----
-
-## Problem Statement
-
-Standard AI evaluation optimizes for accuracy on clean, well-formed inputs. Production systems — especially in mental health and healthcare — encounter inputs that are ambiguous, emotionally loaded, indirect, and structurally atypical.
-
-This project focuses on what happens at that boundary.
-
-The question is not *can the model get it right on a benchmark?* The question is *what does the model do when the input is messy and the cost of a wrong answer is human?*
-
----
-
-## Motivation
-
-This research comes from direct production experience: 7+ years building and operating AI systems in emotionally high-stakes environments — including a live youth suicide prevention platform across 8+ countries and a deployed healthcare AI assistant.
-
-In those systems, false negatives on distress signals, miscalibrated confidence on emotionally ambiguous inputs, and guardrail failures under edge-case load are not abstract concerns. They are operational risk.
-
-This project builds the structured evaluation foundation to identify, categorize, and track those failure patterns before deployment — and to feed findings back into guardrail design.
-
----
-
-## Project Structure
+## What is here
 
 ```
-ai-failure-analysis/
-├── src/
-│   ├── model_simulation.py       # Baseline classifier implementation
-│   ├── evaluation.py             # Scoring, metrics, and failure logging
-│   ├── improved_model.py         # Enhanced rule-based classifier (iterated)
-│   └── failure_cases.md          # Documented failure cases with analysis
-├── notebooks/
-│   └── experiment_1_analysis.ipynb   # Full experiment walkthrough
-├── results/
-│   └── evaluation_summary.md     # Structured output summary
-└── README.md
+src/
+  failure_analysis.py   baseline keyword classifier over labelled samples
+  improved_model.py     second iteration with more patterns
+  evaluate_model.py     accuracy and per-sample output
+  failure_cases.md      the misses, written up one by one
+notebooks/
+  experiment_1_analysis.ipynb
+results/
+  evaluation_summary.md
 ```
 
----
+## Result
 
-## Experiment 1: Baseline Rule-Based Classifier
+```bash
+cd src && python3 evaluate_model.py
+```
 
-### Objective
-Establish a performance floor. Quantify how a naive, keyword-dependent classifier performs on emotionally ambiguous text — specifically text that may signal distress without using explicit distress vocabulary.
+The current code scores **4 of 5 (80%)** on five hand-labelled sentences. The one miss is `"Everything is fine!"`, labelled Negative, which the classifier calls Neutral. It has no way to see suppression or sarcasm behind a positive word.
 
-### Implementation
-Rule-based classifier operating on keyword presence and simple pattern matching — intentionally simplified to surface fundamental failure modes before introducing model complexity.
+`results/evaluation_summary.md` reports 40%. That came from the first version of the keyword rules. I widened the rules afterwards while looking at the same five sentences, and the score doubled.
 
-### Results
+That is the real finding. A classifier tuned while looking at its own test set will look good on it. Five sentences I wrote myself cannot tell me whether the rules generalise. They can only tell me the rules match what I already expected.
 
-| Metric | Value |
-|---|---|
-| Overall Accuracy | ~40% |
-| False Negative Rate (distress) | High |
-| Confidence Calibration | Poor — overconfident on surface matches |
+`src/failure_cases.md` has the original write-ups of the ambiguous cases ("I feel okay today.", "I don't know what to do anymore.", "Everything is fine!").
 
-### Failure Taxonomy
+## What it led to
 
-| Category | Pattern | Risk Level |
-|---|---|---|
-| **Implicit distress** | Distress framed as fatigue, disengagement, or humor | High |
-| **Keyword dependency** | Correct classification only when explicit terms present | High |
-| **Ambiguity collapse** | Ambiguous inputs defaulting to neutral/positive classification | Medium-High |
-| **Context blindness** | Single-sentence accuracy decoupled from conversational context | Medium |
+Two conclusions shaped what I built afterwards:
 
-### Interpretation
+1. A keyword classifier should never be the primary safety layer. It is useful as a high-precision **backstop** when the real classifier is down, and nowhere else.
+2. A test set you tune against is not an evaluation. The next version needed a larger labelled set, written before the rules, and a CI gate that fails on any missed crisis case.
 
-A 40% accuracy rate in a general task is a failed model. In a mental health context, it means the majority of non-explicit distress signals produce incorrect outputs — which in a deployed system translates to dismissive or inappropriate responses to people who are struggling.
+Both are implemented in **[failclosed-guardrail](https://github.com/finessehumxn/failclosed-guardrail)**. See also **[emosafe-ai](https://github.com/finessehumxn/emosafe-ai)**, which probes the output side.
 
-That is the point of measuring it.
+## Limits
 
----
+Five samples. No ML model is included. The roadmap items from the first draft of this README (a BERT classifier, cross-model comparison) were not built here. That work moved to the repo above.
 
-## Evaluation Philosophy
-
-This project uses a **human-impact-centered evaluation framework** rather than standard benchmark metrics:
-
-- **False negative cost weighting** — missed distress signals weighted higher than false positives
-- **Confidence-accuracy gap tracking** — identifies where model certainty diverges from actual reliability
-- **Edge case saturation testing** — inputs designed to stress the boundary conditions, not the center of the distribution
-- **Failure mode categorization** — structured taxonomy for cross-model comparison
-
----
-
-## Experiment Roadmap
-
-| Experiment | Status | Description |
-|---|---|---|
-| Baseline rule-based classifier | ✅ Complete | Performance floor established |
-| Enhanced rule-based classifier | ✅ Complete | Iterated improvements |
-| NLP/ML classifier | 🔄 In Progress | BERT-based model on same dataset |
-| Production LLM evaluation | 📋 Planned | GPT-4 / Claude on edge case set |
-| Guardrail stress testing | 📋 Planned | Safety filter behavior under adversarial input |
-| Cross-model failure comparison | 📋 Planned | Structured taxonomy across model types |
-
----
-
-## Relationship to Production Systems
-
-Findings from this project directly inform:
-
-- Guardrail node design in **[MedCompanionAI](https://github.com/finessehumxn/medcompanion-ai)**
-- Prompt engineering and safety routing in live mental health infrastructure
-- **[EmoSafe AI](https://github.com/finessehumxn/emosafe-ai)** — LLM behavior observation on emotionally sensitive prompts
-
----
-
-## Built By
-
-**L. Finesse Humxn** — AI systems engineer. Founder of [Finesse Our Minds](https://finesseourminds.com).
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-lfinesse---%230077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/lfinesse-)
+L.Finesse Humxn · [finessehumxn.com/work](https://finessehumxn.com/work)
